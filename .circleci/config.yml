@@ -29,10 +29,19 @@ workflows:
       - stage:
           requires:
             - test
+          filters:
+            branches:
+              only: master
       - pre-deploy:
           type: approval
           requires:
             - stage
+          filters:
+            branches:
+              only: master
       - deploy:
           requires:
             - pre-deploy
+          filters:
+            branches:
+              only: master
