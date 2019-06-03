@@ -1,0 +1,36 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: circleci/python:3.6.2
+    steps:
+      - checkout
+      - run: ./manage.py test
+  stage:
+    docker:
+      - image: circleci/python:3.6.2
+    steps:
+      - checkout
+      - run: echo "Placeholder for deploy to staging"
+  deploy:
+    docker:
+      - image: circleci/python:3.6.2
+    steps:
+      - checkout
+      - run: echo "Placeholder for deploy to staging"
+
+workflows:
+  version: 2
+  test-staging-and-deploy-approval:
+    jobs:
+      - test
+      - stage:
+          requires:
+            - test
+      - pre-deploy
+          type: approval
+          requires:
+            -stage
+      - deploy:
+          requires:
+            - pre-deploy
