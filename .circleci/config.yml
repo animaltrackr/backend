@@ -56,35 +56,25 @@ jobs:
     steps:
       - *restore_repo
       - *restore_python_packages
-      - run: flake8
+      - run: source venv/bin/activate && flake8
 
   test:
     <<: *container_config
     steps:
       - *restore_repo
       - *restore_python_packages
-      - run: ./manage.py test
+      - run: source venv/bin/activate && ./manage.py test
 
   stage:
     <<: *container_config
     steps:
       - *attach_workspace
-      - run:
-          name: Restore build assets from workspace
-          command: |
-            rm -rf build
-            mv /tmp/workspace/build build
       - run: echo "Placeholder for deploy to staging"
 
   deploy:
     <<: *container_config
     steps:
       - *attach_workspace
-      - run:
-          name: Restore build assets from workspace
-          command: |
-            rm -rf build
-            mv /tmp/workspace/build build
       - run: echo "Placeholder for deploy to prod"
 
 workflows:
