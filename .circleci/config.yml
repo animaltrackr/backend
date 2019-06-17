@@ -1,0 +1,47 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: circleci/python:3.6.2
+    steps:
+      - checkout
+      - run: sudo pip install virtualenv
+      - run: virtualenv venv
+      - run: source venv/bin/activate && pip install -r requirements.txt && ./manage.py test
+  stage:
+    docker:
+      - image: circleci/python:3.6.2
+    steps:
+      - checkout
+      - run: echo "Placeholder for deploy to staging"
+  deploy:
+    docker:
+      - image: circleci/python:3.6.2
+    steps:
+      - checkout
+      - run: echo "Placeholder for deploy to staging"
+
+workflows:
+  version: 2
+  test-staging-and-deploy-approval:
+    jobs:
+      - test
+      - stage:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+      - pre-deploy:
+          type: approval
+          requires:
+            - stage
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - pre-deploy
+          filters:
+            branches:
+              only: master
