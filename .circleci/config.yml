@@ -18,8 +18,8 @@ references:
         - v1-repo-{{ .Branch }}
         - v1-repo
 
-  venv_cache_key: &venv_cache_key v1-dependency-requirements-{{ checksum "requirements.txt" }}
-  venv_backup_cache_key: &venv_backup_cache_key v1-dependency-requirements
+  venv_cache_key: &venv_cache_key v1-env-dependency-requirements-{{ checksum "requirements.txt" }}
+  venv_backup_cache_key: &venv_backup_cache_key v1-env-dependency-requirements
 
   restore_python_packages: &restore_python_packages
     restore_cache:
