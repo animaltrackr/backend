@@ -1,5 +1,7 @@
 from django.db import models
+from django.utils import timezone
 from enum import Enum
+import datetime
 
 
 class TrackerStatus(Enum):
@@ -29,3 +31,6 @@ class Record(models.Model):
 
     def __str__(self):
         return f"{self.tracker.animal_id} - {self.timestamp}"
+
+    def is_recent(self):
+        return self.timestamp >= timezone.now() - datetime.timedelta(days=1)
