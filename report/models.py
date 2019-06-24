@@ -12,11 +12,21 @@ class TrackerStatus(Enum):
     X = "Unused"
 
 
+class LocationMethod(Enum):
+    G = "GPS"
+    L = "LTE"
+    B = "GPS+LTE"
+
+
 # Create your models here.
 class Tracker(models.Model):
     animal_id = models.CharField(max_length=255, unique=True)
     status = models.CharField(
-        max_length=3, choices=[(tag, tag.value) for tag in TrackerStatus]
+        max_length=3, choices=[(tag.name, tag.value) for tag in TrackerStatus]
+    )
+    desired_accuracy = models.DecimalField(max_digits=5, decimal_places=1)
+    location_method = models.CharField(
+        max_length=3, choices=[(tag.name, tag.value) for tag in LocationMethod]
     )
 
     def __str__(self):
@@ -28,6 +38,7 @@ class Record(models.Model):
     timestamp = models.DateTimeField("date time recorded")
     geo_lat = models.DecimalField(max_digits=9, decimal_places=6)
     geo_long = models.DecimalField(max_digits=9, decimal_places=6)
+    geo_accuracy = models.DecimalField(max_digits=5, decimal_places=1)
 
     def __str__(self):
         return f"{self.tracker.animal_id} - {self.timestamp}"
