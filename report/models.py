@@ -26,7 +26,9 @@ class Tracker(models.Model):
     )
     desired_accuracy = models.DecimalField(max_digits=5, decimal_places=1)
     location_method = models.CharField(
-        max_length=3, choices=[(tag.name, tag.value) for tag in LocationMethod]
+        max_length=3,
+        choices=[(tag.name, tag.value) for tag in LocationMethod],
+        default=(LocationMethod.B.name, LocationMethod.B.value),
     )
 
     def __str__(self):
