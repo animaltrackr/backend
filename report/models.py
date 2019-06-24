@@ -41,6 +41,11 @@ class Record(models.Model):
     geo_lat = models.DecimalField(max_digits=9, decimal_places=6)
     geo_long = models.DecimalField(max_digits=9, decimal_places=6)
     geo_accuracy = models.DecimalField(max_digits=5, decimal_places=1)
+    geo_method = models.CharField(
+        max_length=3,
+        choices=[(tag.name, tag.value) for tag in LocationMethod],
+        default=(LocationMethod.L.name, LocationMethod.L.value),
+    )
 
     def __str__(self):
         return f"{self.tracker.animal_id} - {self.timestamp}"
