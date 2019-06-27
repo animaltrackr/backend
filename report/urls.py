@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 
+app_name = "report"
 urlpatterns = [
     # ex: /report/
     path("", views.index, name="index"),
@@ -16,5 +17,5 @@ urlpatterns = [
     # ex: /report/records/add
     path("records/add", views.record_add, name="record add"),
     # ex: /report/records/<uuid>
-    path("records/<uuid:tracker_id>", views.record_details, name="record details"),
+    path("records/<uuid:record_id>", views.record_details, name="record details"),
 ]

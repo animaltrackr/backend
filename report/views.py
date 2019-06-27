@@ -1,5 +1,9 @@
+from django.core import serializers
+from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponse
+
+from .models import Record, Tracker
 
 
 def index(request):
@@ -7,7 +11,10 @@ def index(request):
 
 
 def trackers(request):
-    return HttpResponse("You're looking at the list of trackers.")
+    response_data = Tracker.objects.all()
+    return HttpResponse(
+        serializers.serialize("json", response_data), content_type="application/json"
+    )
 
 
 def tracker_add(request):
@@ -15,12 +22,17 @@ def tracker_add(request):
 
 
 def tracker_details(request, tracker_id):
-    response = "You're looking at the details of tracker %s"
-    return HttpResponse(response % tracker_id)
+    response_data = Tracker.objects.filter(Q(pk=tracker_id))
+    return HttpResponse(
+        serializers.serialize("json", response_data), content_type="application/json"
+    )
 
 
 def records(request):
-    return HttpResponse("You're looking at the list of trackers.")
+    response_data = Record.objects.all()
+    return HttpResponse(
+        serializers.serialize("json", response_data), content_type="application/json"
+    )
 
 
 def record_add(request):
@@ -28,5 +40,7 @@ def record_add(request):
 
 
 def record_details(request, record_id):
-    response = "You're looking at the details of record %s"
-    return HttpResponse(response % record_id)
+    response_data = Record.objects.filter(pk=record_id)
+    return HttpResponse(
+        serializers.serialize("json", response_data), content_type="application/json"
+    )
