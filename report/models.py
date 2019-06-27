@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.utils import timezone
 from enum import Enum
@@ -20,6 +22,7 @@ class LocationMethod(Enum):
 
 # Create your models here.
 class Tracker(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     animal_id = models.CharField(max_length=255, unique=True)
     status = models.CharField(
         max_length=3, choices=[(tag.name, tag.value) for tag in TrackerStatus]
@@ -36,6 +39,7 @@ class Tracker(models.Model):
 
 
 class Record(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     tracker = models.ForeignKey(Tracker, on_delete=models.CASCADE)
     timestamp = models.DateTimeField("date time recorded")
     geo_lat = models.DecimalField(max_digits=9, decimal_places=6)
