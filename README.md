@@ -17,3 +17,23 @@ Once this is installed, in the project directory `virtualenv -p python3 venv`
 
 The site can then be hit at `localhost:8000`
 
+## Database
+
+This app uses a Postgresql database. Install your version locally such that you can access
+the console using `psql`.
+
+From here, create a new database `tracker_local`, user `tracker_user`.
+
+Grant the user all permissions on the database and then exit the terminal prompt.
+
+Now, enter the venv for the Django backend and active it. Then run `pip install django psycopg2`.
+
+### Ubunutu
+
+For an Ubuntu system, I was just able to run
+
+`sudo apt install postresql`
+
+`sudo apt install python-psycopg2`
+
+`sudo apt install libpq-dev`
