@@ -5,7 +5,7 @@ from .models import Tracker, Record, TrackerStatus, LocationMethod
 class TrackerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tracker
-        fields = ("id", "animal_id", "status", "desired_accuracy", "location_method")
+        fields = ("id", "animal_id", "status", "max_error_radius", "location_method")
         read_only_fields = ("id",)
 
 
@@ -18,7 +18,7 @@ class RecordSerializer(serializers.ModelSerializer):
             "timestamp",
             "geo_lat",
             "geo_long",
-            "geo_accuracy",
+            "geo_error_radius",
             "geo_method",
         )
         read_only_fields = (
@@ -27,6 +27,6 @@ class RecordSerializer(serializers.ModelSerializer):
             "timestamp",
             "geo_lat",
             "geo_long",
-            "geo_accuracy",
+            "geo_error_radius",
             "geo_method",
         )

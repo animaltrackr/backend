@@ -27,7 +27,7 @@ class Tracker(models.Model):
     status = models.CharField(
         max_length=3, choices=[(tag.name, tag.value) for tag in TrackerStatus]
     )
-    desired_accuracy = models.DecimalField(max_digits=5, decimal_places=1)
+    max_error_radius = models.DecimalField(max_digits=5, decimal_places=1)
     location_method = models.CharField(
         max_length=3,
         choices=[(tag.name, tag.value) for tag in LocationMethod],
@@ -44,7 +44,7 @@ class Record(models.Model):
     timestamp = models.DateTimeField("date time recorded")
     geo_lat = models.DecimalField(max_digits=9, decimal_places=6)
     geo_long = models.DecimalField(max_digits=9, decimal_places=6)
-    geo_accuracy = models.DecimalField(max_digits=5, decimal_places=1)
+    geo_error_radius = models.DecimalField(max_digits=5, decimal_places=1)
     geo_method = models.CharField(
         max_length=3,
         choices=[(tag.name, tag.value) for tag in LocationMethod],
