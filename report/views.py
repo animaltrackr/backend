@@ -80,11 +80,7 @@ def record_details(request, record_id):
         return JsonResponse(serializer.data)
 
     elif request.method == "PUT":
-        data = JSONParser().parse(request)
-        serializer = RecordSerializer(record, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
+        # records should be immutable
         return JsonResponse(serializer.errors, status=400)
 
     elif request.method == "DELETE":
