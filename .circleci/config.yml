@@ -1,47 +1,108 @@
 version: 2.1
-jobs:
-  test:
+
+references:
+  container_config: &container_config
     docker:
       - image: circleci/python:3.6.2
+    working_directory: ~/repo
+
+  workspace_root: &workspace_root /tmp/workspace
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+  restore_repo: &restore_repo
+    restore_cache:
+      keys:
+        - v1-repo-{{ .Branch }}-{{ .Revision }}
+        - v1-repo-{{ .Branch }}
+        - v1-repo
+
+  venv_cache_key: &venv_cache_key v1-env-dependency-requirements-{{ checksum "requirements.txt" }}
+  venv_backup_cache_key: &venv_backup_cache_key v1-env-dependency-requirements
+
+  restore_python_packages: &restore_python_packages
+    restore_cache:
+      keys:
+        - *venv_cache_key
+        - *venv_backup_cache_key
+
+jobs:
+  checkout_code:
+    <<: *container_config
     steps:
+      - *restore_repo
       - checkout
+      - save_cache:
+          key: v1-repo-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/repo
+
+  install_dependencies:
+    <<: *container_config
+    steps:
+      - *restore_repo
+      - *restore_python_packages
       - run: sudo pip install virtualenv
       - run: virtualenv venv
-      - run: source venv/bin/activate && pip install -r requirements.txt && ./manage.py test
+      - run: source venv/bin/activate && pip install -r requirements.txt
+      - save_cache:
+          key: *venv_cache_key
+          paths:
+            - ~/repo/venv
+
+  lint:
+    <<: *container_config
+    steps:
+      - *restore_repo
+      - *restore_python_packages
+      - run: source venv/bin/activate && flake8
+
+  test:
+    <<: *container_config
+    steps:
+      - *restore_repo
+      - *restore_python_packages
+      - run: source venv/bin/activate && ./manage.py test
+
   stage:
-    docker:
-      - image: circleci/python:3.6.2
+    <<: *container_config
     steps:
-      - checkout
+      - *attach_workspace
       - run: echo "Placeholder for deploy to staging"
+
   deploy:
-    docker:
-      - image: circleci/python:3.6.2
+    <<: *container_config
     steps:
-      - checkout
-      - run: echo "Placeholder for deploy to staging"
+      - *attach_workspace
+      - run: echo "Placeholder for deploy to prod"
 
 workflows:
   version: 2
-  test-staging-and-deploy-approval:
+  lint_test_build_stage_deploy:
     jobs:
-      - test
+      - checkout_code
+      - install_dependencies:
+          requires:
+            - checkout_code
+      - lint:
+          requires:
+            - install_dependencies
+      - test:
+          requires:
+            - install_dependencies
       - stage:
           requires:
+            - lint
             - test
-          filters:
-            branches:
-              only: master
-      - pre-deploy:
-          type: approval
-          requires:
-            - stage
           filters:
             branches:
               only: master
       - deploy:
           requires:
-            - pre-deploy
+            - lint
+            - test
           filters:
             branches:
-              only: master
+              only: prod
+              
