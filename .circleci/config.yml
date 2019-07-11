@@ -63,18 +63,26 @@ jobs:
     steps:
       - *restore_repo
       - *restore_python_packages
-      - run: source venv/bin/activate && ./manage.py test
+      - run: source venv/bin/activate && python ./manage.py test
 
   stage:
     <<: *container_config
     steps:
-      - *attach_workspace
-      - run: echo "Placeholder for deploy to staging"
+      - *restore_repo
+      - add_ssh_keys:
+          fingerprints:
+            - "e9:c4:91:1d:a5:dd:71:2d:b0:69:58:1e:72:a3:aa:16"
+      - run: pwd && ls -la && ls ./.circleci -la
+      - run: chmod 777 ./.circleci/stage.sh
+      - run: ./.circleci/stage.sh
 
   deploy:
     <<: *container_config
     steps:
       - *attach_workspace
+      - add_ssh_keys:
+          fingerprints:
+            - "e9:c4:91:1d:a5:dd:71:2d:b0:69:58:1e:72:a3:aa:16"
       - run: echo "Placeholder for deploy to prod"
 
 workflows:
@@ -95,9 +103,6 @@ workflows:
           requires:
             - lint
             - test
-          filters:
-            branches:
-              only: master
       - deploy:
           requires:
             - lint
@@ -105,4 +110,3 @@ workflows:
           filters:
             branches:
               only: prod
-              
