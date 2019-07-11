@@ -7,7 +7,7 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('report', '0002_record_geo_method'),
+        ('animal', '0002_record_geo_method'),
     ]
 
     operations = [

@@ -3,13 +3,13 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from .models import Record, Tracker
-from .serializers import TrackerSerializer, RecordSerializer
+from .models import Point, Tracker
+from .serializers import TrackerSerializer, PointSerializer
 
 
 def index(request):
     #  TODO: Render webpage with endpoint documentation
-    return HttpResponse("Hello, world. You're at the report index.")
+    return HttpResponse("Hello, world. You're at the animal index.")
 
 
 @csrf_exempt
@@ -53,15 +53,15 @@ def tracker_details(request, tracker_id):
 
 
 @csrf_exempt
-def record_list(request):
+def point_list(request):
     if request.method == "GET":
-        records = Record.objects.all()
-        serializer = RecordSerializer(records, many=True)
+        points = Point.objects.all()
+        serializer = PointSerializer(points, many=True)
         return JsonResponse(serializer.data, safe=False)
 
     if request.method == "POST":
         data = JSONParser().parse(request)
-        serializer = RecordSerializer(data=data)
+        serializer = PointSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
@@ -69,20 +69,20 @@ def record_list(request):
 
 
 @csrf_exempt
-def record_details(request, record_id):
+def point_details(request, point_id):
     try:
-        record = Record.objects.get(pk=record_id)
-    except Record.DoesNotExist:
+        point = Point.objects.get(pk=point_id)
+    except Point.DoesNotExist:
         return HttpResponse(status=404)
 
     if request.method == "GET":
-        serializer = RecordSerializer(record)
+        serializer = PointSerializer(point)
         return JsonResponse(serializer.data)
 
     elif request.method == "PUT":
-        # records should be immutable
+        # points should be immutable
         return JsonResponse(serializer.errors, status=400)
 
     elif request.method == "DELETE":
-        record.delete()
+        point.delete()
         return HttpResponse(status=204)
