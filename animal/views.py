@@ -9,7 +9,7 @@ from .serializers import TrackerSerializer, PointSerializer
 
 def index(request):
     #  TODO: Render webpage with endpoint documentation
-    return HttpResponse("Hello, world. You're at the report index.")
+    return HttpResponse("Hello, world. You're at the animal index.")
 
 
 @csrf_exempt

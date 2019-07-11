@@ -2,16 +2,16 @@ from django.urls import path
 
 from . import views
 
-app_name = "report"
+app_name = "animal"
 urlpatterns = [
-    # ex: /report/
+    # ex: /animal/
     path("", views.index, name="index"),
-    # ex: /report/trackers
+    # ex: /animal/trackers
     path("trackers", views.tracker_list),
-    # ex: /report/trackers/<uuid>
+    # ex: /animal/trackers/<uuid>
     path("trackers/<uuid:tracker_id>", views.tracker_details),
-    # ex: /report/points
+    # ex: /animal/points
     path("points", views.point_list),
-    # ex: /report/points/<uuid>
+    # ex: /animal/points/<uuid>
     path("points/<uuid:point_id>", views.point_details),
 ]

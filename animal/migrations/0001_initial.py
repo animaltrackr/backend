@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('geo_lat', models.DecimalField(decimal_places=6, max_digits=9)),
                 ('geo_long', models.DecimalField(decimal_places=6, max_digits=9)),
                 ('geo_accuracy', models.DecimalField(decimal_places=1, max_digits=5)),
-                ('tracker', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='report.Tracker')),
+                ('tracker', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='animal.Tracker')),
             ],
         ),
     ]
