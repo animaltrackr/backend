@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Tracker, Record, TrackerStatus, LocationMethod
+from .models import Tracker, Point, TrackerStatus, LocationMethod
 
 
 class TrackerSerializer(serializers.ModelSerializer):
@@ -9,9 +9,9 @@ class TrackerSerializer(serializers.ModelSerializer):
         read_only_fields = ("id",)
 
 
-class RecordSerializer(serializers.ModelSerializer):
+class PointSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Record
+        model = Point
         fields = (
             "id",
             "tracker",

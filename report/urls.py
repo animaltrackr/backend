@@ -10,8 +10,8 @@ urlpatterns = [
     path("trackers", views.tracker_list),
     # ex: /report/trackers/<uuid>
     path("trackers/<uuid:tracker_id>", views.tracker_details),
-    # ex: /report/records
-    path("records", views.record_list),
-    # ex: /report/records/<uuid>
-    path("records/<uuid:record_id>", views.record_details),
+    # ex: /report/points
+    path("points", views.point_list),
+    # ex: /report/points/<uuid>
+    path("points/<uuid:point_id>", views.point_details),
 ]

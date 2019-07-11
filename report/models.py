@@ -38,7 +38,7 @@ class Tracker(models.Model):
         return self.animal_id
 
 
-class Record(models.Model):
+class Point(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     tracker = models.ForeignKey(Tracker, on_delete=models.CASCADE)
     timestamp = models.DateTimeField("date time recorded")
