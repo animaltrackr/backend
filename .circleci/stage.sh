@@ -1,14 +1,15 @@
 # SETUP AWS
 # aws configure set $ACCESS_KEY_ID $SECRET_ACCESS_KEY;
-echo "Transfering files to ec2 instance"
-echo ${DEPLOY_USER}@${DEPLOY_LOCATION}
-scp -r -o "StrictHostKeyChecking no" ~/repo ${DEPLOY_USER}@${DEPLOY_LOCATION}:~/tmp
+echo "***** Transfering files to ec2 instance *****\n"
+scp -r -v -o "StrictHostKeyChecking no" ~/repo ${DEPLOY_USER}@${DEPLOY_LOCATION}:~/tmp
 
-ssh -o "StrictHostKeyChecking no" ${DEPLOY_USER}@${DEPLOY_LOCATION} << HERE
-    pwd
-    ls -la
-    ls ./tmp -la
-    ls ./tmp/repo -la
-    ls ./tmp/repo/trackr_server -la
-    ls ./tmp/repo/backend -la
+echo "***** SSHing into ec2 instance for setup *****\n"
+ssh -tt -o "StrictHostKeyChecking no" ${DEPLOY_USER}@${DEPLOY_LOCATION} << HERE
+    killall screen
+    rm -rf ~/api
+    mv ~/tmp ~/api
+    cd api
+    sudo pip3 install -r requirements.txt # <- I know this isn't ideal
+    screen -dm python3 ./manage.py runserver
+    exit
 HERE
