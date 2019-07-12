@@ -1,5 +1,4 @@
 # SETUP AWS
-# aws configure set $ACCESS_KEY_ID $SECRET_ACCESS_KEY;
 echo "***** Transfering files to ec2 instance *****\n"
 scp -r -v -o "StrictHostKeyChecking no" ~/repo ${DEPLOY_USER}@${DEPLOY_LOCATION}:~/tmp
 
@@ -10,6 +9,7 @@ ssh -tt -o "StrictHostKeyChecking no" ${DEPLOY_USER}@${DEPLOY_LOCATION} << HERE
     mv ~/tmp ~/api
     cd api
     sudo pip3 install -r requirements.txt # <- I know this isn't ideal
+    python3 ./manage.py migrate
     screen -dm python3 ./manage.py runserver
     exit
 HERE
