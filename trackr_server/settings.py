@@ -76,11 +76,11 @@ WSGI_APPLICATION = "trackr_server.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "HOST": "localhost",
-        "PORT": "",
-        "NAME": "tracker_local",
-        "USER": "tracker_user",
-        "PASSWORD": "supersecur3",
+        "HOST": os.environ["DB_HOST"],
+        "PORT": os.environ["DB_PORT"],
+        "NAME": os.environ["DB_NAME"],
+        "USER": os.environ["DB_USER"],
+        "PASSWORD": os.environ["DB_PASSWORD"],
     }
 }
 

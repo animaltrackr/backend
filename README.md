@@ -28,6 +28,10 @@ Grant the user all permissions on the database and then exit the terminal prompt
 
 Now, enter the venv for the Django backend and active it. Then run `pip install django psycopg2`.
 
+If you're running macOS and installing psycopg2 errors out, try running:
+`env LDFLAGS="-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib" pip install psycopg2`.  
+It sets the openssl version to that installed by homebrew when installing psycopg2.
+
 ### Ubunutu
 
 For an Ubuntu system, I was just able to run
