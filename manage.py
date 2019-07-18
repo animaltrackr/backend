@@ -5,6 +5,12 @@ import sys
 
 
 def main():
+    os.environ.setdefault("API_ENV", "local")
+    os.environ.setdefault("DB_HOST", "localhost")
+    os.environ.setdefault("DB_PORT", "5432")
+    os.environ.setdefault("DB_NAME", "tracker_local")
+    os.environ.setdefault("DB_USER", "tracker_user")
+    os.environ.setdefault("DB_PASSWORD", "supersecur3")
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "trackr_server.settings")
     try:
         from django.core.management import execute_from_command_line
