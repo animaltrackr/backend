@@ -8,7 +8,9 @@ ssh -tt -o "StrictHostKeyChecking no" ${DEPLOY_USER}@${DEPLOY_LOCATION} << HERE
     rm -rf ~/api
     mv ~/tmp ~/api
     cd api
-    sudo pip3 install -r requirements.txt # <- I know this isn't ideal
+    pip3 install -r requirements.txt --user # <- I know this isn't ideal. Andy: Changed to --user to fix psycopg2.
+    rm /home/ec2-user/api/trackr_server/settings.py
+    ln -s /home/ec2-user/settings.py /home/ec2-user/api/trackr_server/settings.py
     python3 ./manage.py migrate
     screen -dm python3 ./manage.py runserver
     exit
