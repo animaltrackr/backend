@@ -30,3 +30,18 @@ class PointSerializer(serializers.ModelSerializer):
             "geo_error_radius",
             "geo_method",
         )
+
+
+class PointCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Point
+        fields = (
+            "id",
+            "tracker",
+            "timestamp",
+            "geo_lat",
+            "geo_long",
+            "geo_error_radius",
+            "geo_method",
+        )
+        read_only_fields = ("id",)
