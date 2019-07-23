@@ -72,7 +72,6 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "e9:c4:91:1d:a5:dd:71:2d:b0:69:58:1e:72:a3:aa:16"
-      - run: pwd && ls -la && ls ./.circleci -la
       - run: chmod 777 ./.circleci/stage.sh
       - run: ./.circleci/stage.sh
 
