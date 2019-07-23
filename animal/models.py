@@ -31,7 +31,7 @@ class Tracker(models.Model):
     location_method = models.CharField(
         max_length=3,
         choices=[(tag.name, tag.value) for tag in LocationMethod],
-        default=(LocationMethod.B.name, LocationMethod.B.value),
+        default=LocationMethod.B.name,
     )
 
     def __str__(self):
@@ -48,7 +48,7 @@ class Point(models.Model):
     geo_method = models.CharField(
         max_length=3,
         choices=[(tag.name, tag.value) for tag in LocationMethod],
-        default=(LocationMethod.L.name, LocationMethod.L.value),
+        default=LocationMethod.L.name,
     )
 
     def __str__(self):
