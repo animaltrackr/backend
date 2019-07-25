@@ -32,8 +32,10 @@ CORS_ORIGIN_WHITELIST = (
     "http://127.0.0.1",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "http://api.animaltrackr.com",
-    "https://api.animaltrackr.com",
+    "http://animaltrackr.com",
+    "https://animaltrackr.com",
+    "http://www.animaltrackr.com",
+    "https://www.animaltrackr.com",
 )
 
 # Application definition
