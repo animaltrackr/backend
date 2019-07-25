@@ -25,7 +25,8 @@ SECRET_KEY = "hx3ffmzs5^)$rlbk)adlj7$apdwgiks%g_*_%dmi5k)m*=65%#"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ["API_ENV"] == "local" else False
 
-ALLOWED_HOSTS = []
+# TODO: should be limited to .animaltrackr.com if ever in full production
+ALLOWED_HOSTS = [".animaltrackr.com", "localhost", "127.0.0.1", "[::1]"]
 
 CORS_ORIGIN_WHITELIST = (
     "http://localhost",
