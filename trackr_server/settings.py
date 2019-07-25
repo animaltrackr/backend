@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "hx3ffmzs5^)$rlbk)adlj7$apdwgiks%g_*_%dmi5k)m*=65%#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if os.environ["API_ENV"] == "local" else False
 
 ALLOWED_HOSTS = []
 
